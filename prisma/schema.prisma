@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Session {
+  id              String          @id @default(uuid())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  status          String          @default("active") // active, completed, abandoned
+
+  // Lead data
+  firstName       String?
+  lastName        String?
+  email           String?
+  phone           String?
+
+  // Qualification
+  qualificationScore Int          @default(0)
+  qualificationTier  String?      // hot, warm, cold, nurture
+  tags            String          @default("[]") // JSON array stored as string
+
+  // Tracking
+  currentQuestionId String        @default("start")
+  lastActivityAt    DateTime      @default(now())
+  completedAt       DateTime?
+  webhookSentAt     DateTime?
+
+  // User agent / source tracking
+  userAgent       String?
+  ipAddress       String?
+  referrer        String?
+
+  // Answers relation
+  answers         SessionAnswer[]
+}
+
+model SessionAnswer {
+  id          String   @id @default(uuid())
+  sessionId   String
+  questionId  String
+  answerId    String
+  answerText  String?
+  createdAt   DateTime @default(now())
+
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, questionId])
+}
