@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   funnelQuestions,
   getQuestionById,
@@ -10,6 +10,82 @@ import {
   type Answer,
   type LeadData
 } from '../lib/funnelData';
+
+// Session API helpers
+async function createSession(): Promise<string | null> {
+  try {
+    const response = await fetch('/api/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ referrer: document.referrer }),
+    });
+    const data = await response.json();
+    return data.success ? data.sessionId : null;
+  } catch (error) {
+    console.error('Failed to create session:', error);
+    return null;
+  }
+}
+
+async function updateSession(
+  sessionId: string,
+  updates: {
+    questionId?: string;
+    answerId?: string;
+    answerText?: string;
+    qualificationScore?: number;
+    tags?: string[];
+    currentQuestionId?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+  }
+): Promise<void> {
+  try {
+    await fetch(`/api/sessions/${sessionId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+  } catch (error) {
+    console.error('Failed to update session:', error);
+  }
+}
+
+async function completeSession(sessionId: string): Promise<{ webhookSent: boolean }> {
+  try {
+    const response = await fetch(`/api/sessions/${sessionId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'complete' }),
+    });
+    const data = await response.json();
+    return { webhookSent: data.webhookSent || false };
+  } catch (error) {
+    console.error('Failed to complete session:', error);
+    return { webhookSent: false };
+  }
+}
+
+async function abandonSession(sessionId: string): Promise<void> {
+  try {
+    // Use sendBeacon for reliability during page unload
+    const data = JSON.stringify({ action: 'abandon' });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(`/api/sessions/${sessionId}`, new Blob([data], { type: 'application/json' }));
+    } else {
+      await fetch(`/api/sessions/${sessionId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+        keepalive: true,
+      });
+    }
+  } catch (error) {
+    console.error('Failed to abandon session:', error);
+  }
+}
 
 // Progress indicator component
 function ProgressIndicator({
@@ -454,11 +530,52 @@ export default function Funnel() {
     timestamp: new Date()
   });
   const [isAnimating, setIsAnimating] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const sessionCompletedRef = useRef(false);
 
   const currentQuestion = getQuestionById(currentQuestionId);
 
   // Calculate progress based on current question position in funnel
   const progress = getProgressForQuestion(currentQuestionId);
+
+  // Initialize session on mount
+  useEffect(() => {
+    const initSession = async () => {
+      const id = await createSession();
+      if (id) {
+        setSessionId(id);
+        console.log('Session created:', id);
+      }
+    };
+    initSession();
+  }, []);
+
+  // Handle bounce/abandon detection
+  useEffect(() => {
+    if (!sessionId || sessionCompletedRef.current) return;
+
+    const handleBeforeUnload = () => {
+      // Don't abandon if session was completed
+      if (!sessionCompletedRef.current) {
+        abandonSession(sessionId);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      // Mark as abandoned if user leaves the tab without completing
+      if (document.visibilityState === 'hidden' && !sessionCompletedRef.current) {
+        // We could track this as a potential abandon, but let's wait for actual unload
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [sessionId]);
 
   const navigateToQuestion = useCallback((questionId: string | null) => {
     if (!questionId) return;
@@ -468,8 +585,13 @@ export default function Funnel() {
       setHistory(prev => [...prev, currentQuestionId]);
       setCurrentQuestionId(questionId);
       setIsAnimating(false);
+
+      // Update session with current question
+      if (sessionId) {
+        updateSession(sessionId, { currentQuestionId: questionId });
+      }
     }, 150);
-  }, [currentQuestionId]);
+  }, [currentQuestionId, sessionId]);
 
   const goBack = useCallback(() => {
     if (history.length === 0) return;
@@ -481,11 +603,16 @@ export default function Funnel() {
       setHistory(newHistory);
       setCurrentQuestionId(previousQuestion);
       setIsAnimating(false);
+
+      // Update session
+      if (sessionId) {
+        updateSession(sessionId, { currentQuestionId: previousQuestion });
+      }
     }, 150);
-  }, [history]);
+  }, [history, sessionId]);
 
   const handleAnswer = useCallback((answer: Answer) => {
-    // Update lead data
+    // Update lead data locally
     setLeadData(prev => ({
       ...prev,
       answers: { ...prev.answers, [currentQuestionId]: answer.id },
@@ -493,20 +620,51 @@ export default function Funnel() {
       qualificationScore: prev.qualificationScore + (answer.qualificationScore || 0)
     }));
 
+    // Update session with the answer
+    if (sessionId) {
+      updateSession(sessionId, {
+        questionId: currentQuestionId,
+        answerId: answer.id,
+        answerText: answer.text,
+        qualificationScore: answer.qualificationScore || 0,
+        tags: answer.tags || [],
+        currentQuestionId: answer.nextQuestionId || currentQuestionId,
+      });
+    }
+
     // Navigate to next question
     navigateToQuestion(answer.nextQuestionId);
-  }, [currentQuestionId, navigateToQuestion]);
+  }, [currentQuestionId, navigateToQuestion, sessionId]);
 
-  const handleLeadCapture = useCallback((data: Partial<LeadData>) => {
+  const handleLeadCapture = useCallback(async (data: Partial<LeadData>) => {
+    // Update lead data locally
     setLeadData(prev => ({
       ...prev,
       ...data
     }));
 
+    // Update session with lead info
+    if (sessionId) {
+      await updateSession(sessionId, {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+      });
+
+      // If this is the contact-capture form (has email and phone), complete the session and send webhook
+      if (currentQuestion?.id === 'contact-capture' && data.email && data.phone) {
+        console.log('Contact info captured, completing session and sending webhook...');
+        sessionCompletedRef.current = true;
+        const result = await completeSession(sessionId);
+        console.log('Webhook sent:', result.webhookSent);
+      }
+    }
+
     if (currentQuestion?.nextQuestionId) {
       navigateToQuestion(currentQuestion.nextQuestionId);
     }
-  }, [currentQuestion, navigateToQuestion]);
+  }, [currentQuestion, navigateToQuestion, sessionId]);
 
   const handleTransitionContinue = useCallback(() => {
     if (currentQuestion?.nextQuestionId) {
