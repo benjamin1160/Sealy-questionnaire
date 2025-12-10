@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Find Your Perfect Mobile Home | Mobile Home Finder",
-  description: "Answer a few questions and we'll help you find the perfect mobile home for your needs. Land, financing, and communities - we've got you covered.",
-  keywords: "mobile home, manufactured home, mobile home financing, mobile home communities, land for mobile home",
+  title: "Find Your Perfect Mobile Home | Reliable Homes of Sealy",
+  description: "Reliable Homes of Sealy - Your trusted mobile home dealer in Sealy, Texas. Answer a few questions and we'll help you find the perfect manufactured home. Huge selection of single-wide and double-wide homes. Delivery anywhere in Texas.",
+  keywords: "Reliable Homes Sealy, mobile home Sealy TX, manufactured home Texas, mobile home dealer, single wide homes, double wide homes, mobile home financing, Clayton Homes dealer",
   openGraph: {
-    title: "Find Your Perfect Mobile Home",
-    description: "Let us help you discover your ideal mobile home. Quick, easy, and personalized to your needs.",
+    title: "Find Your Perfect Mobile Home | Reliable Homes of Sealy",
+    description: "Discover your ideal manufactured home with Reliable Homes of Sealy. Huge selection, great financing, and delivery anywhere in Texas.",
     type: "website",
   },
 };

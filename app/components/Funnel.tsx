@@ -100,7 +100,7 @@ function ProgressIndicator({
       </div>
       <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500 ease-out"
+          className="h-full bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-green)] transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -123,10 +123,10 @@ function AnswerButton({
       onClick={onClick}
       className={`
         w-full p-4 rounded-xl border-2 text-left transition-all duration-200
-        hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-md hover:scale-[1.02]
+        hover:border-[var(--brand-blue)] hover:bg-[var(--brand-blue-light)] hover:shadow-md hover:scale-[1.02]
         active:scale-[0.98]
         ${isSelected
-          ? 'border-emerald-500 bg-emerald-50 shadow-md'
+          ? 'border-[var(--brand-blue)] bg-[var(--brand-blue-light)] shadow-md'
           : 'border-gray-200 bg-white'
         }
       `}
@@ -145,7 +145,7 @@ function AnswerButton({
           w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center
           transition-all duration-200
           ${isSelected
-            ? 'border-emerald-500 bg-emerald-500'
+            ? 'border-[var(--brand-blue)] bg-[var(--brand-blue)]'
             : 'border-gray-300'
           }
         `}>
@@ -238,7 +238,7 @@ function LeadCaptureForm({
               onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               className={`
                 w-full px-4 py-3 rounded-xl border-2 text-lg
-                focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
                 transition-all duration-200
                 ${errors.firstName ? 'border-red-400' : 'border-gray-200'}
               `}
@@ -262,7 +262,7 @@ function LeadCaptureForm({
               onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
               className={`
                 w-full px-4 py-3 rounded-xl border-2 text-lg
-                focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
                 transition-all duration-200
                 ${errors.lastName ? 'border-red-400' : 'border-gray-200'}
               `}
@@ -285,7 +285,7 @@ function LeadCaptureForm({
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className={`
                 w-full px-4 py-3 rounded-xl border-2 text-lg
-                focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
                 transition-all duration-200
                 ${errors.email ? 'border-red-400' : 'border-gray-200'}
               `}
@@ -308,7 +308,7 @@ function LeadCaptureForm({
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className={`
                 w-full px-4 py-3 rounded-xl border-2 text-lg
-                focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
                 transition-all duration-200
                 ${errors.phone ? 'border-red-400' : 'border-gray-200'}
               `}
@@ -331,9 +331,9 @@ function LeadCaptureForm({
           </button>
           <button
             type="submit"
-            className="flex-grow px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500
-              text-white font-semibold text-lg shadow-lg shadow-emerald-200
-              hover:shadow-xl hover:shadow-emerald-300 hover:scale-[1.02]
+            className="flex-grow px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-blue-dark)]
+              text-white font-semibold text-lg shadow-lg shadow-blue-200
+              hover:shadow-xl hover:shadow-blue-300 hover:scale-[1.02]
               active:scale-[0.98] transition-all duration-200"
           >
             Continue
@@ -364,8 +364,8 @@ function TransitionScreen({
 
   return (
     <div className="animate-fadeIn text-center">
-      <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-        <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-16 h-16 bg-[var(--brand-blue-light)] rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg className="w-8 h-8 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
@@ -389,9 +389,9 @@ function TransitionScreen({
         </button>
         <button
           onClick={onContinue}
-          className="px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500
-            text-white font-semibold text-lg shadow-lg shadow-emerald-200
-            hover:shadow-xl hover:shadow-emerald-300 hover:scale-[1.02]
+          className="px-8 py-3 rounded-xl bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-blue-dark)]
+            text-white font-semibold text-lg shadow-lg shadow-blue-200
+            hover:shadow-xl hover:shadow-blue-300 hover:scale-[1.02]
             active:scale-[0.98] transition-all duration-200"
         >
           Got it, let&apos;s continue
@@ -422,7 +422,7 @@ function ResultScreen({
 
   return (
     <div className="animate-fadeIn text-center">
-      <div className="w-20 h-20 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-slow">
+      <div className="w-20 h-20 bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-green)] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-slow">
         <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
         </svg>
@@ -437,26 +437,26 @@ function ResultScreen({
         </p>
       )}
 
-      <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 max-w-md mx-auto mb-8">
-        <p className="text-sm text-emerald-700 font-medium mb-2">What happens next?</p>
+      <div className="bg-gradient-to-r from-[var(--brand-blue-light)] to-[var(--brand-green-light)] rounded-2xl p-6 max-w-md mx-auto mb-8">
+        <p className="text-sm text-[var(--brand-blue-dark)] font-medium mb-2">What happens next?</p>
         <ul className="text-left text-gray-600 space-y-2">
           <li className="flex items-start gap-2">
-            <span className="text-emerald-500 mt-1">✓</span>
-            <span>A mobile home specialist will review your info</span>
+            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
+            <span>A Reliable Homes specialist will review your info</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-500 mt-1">✓</span>
+            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
             <span>We&apos;ll match you with homes that fit your needs</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-500 mt-1">✓</span>
+            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
             <span>Expect to hear from us within 24 hours</span>
           </li>
         </ul>
       </div>
 
       <div className="text-gray-500 text-sm">
-        <p>Questions? Call us at <a href="tel:1-800-555-HOME" className="text-emerald-600 font-medium hover:underline">1-800-555-HOME</a></p>
+        <p>Questions? Call us at <a href="tel:9798856767" className="text-[var(--brand-blue)] font-medium hover:underline">(979) 885-6767</a></p>
       </div>
     </div>
   );
