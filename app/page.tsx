@@ -2,50 +2,77 @@ import Funnel from './components/Funnel';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-[var(--brand-blue-light)]">
-      {/* Header */}
-      <header className="py-6 px-4 border-b border-gray-100 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-[var(--brand-blue)] rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Header - Clayton-style clean nav */}
+      <header className="py-4 px-4 bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <a href="https://www.reliablehomesofsealy.com" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            {/* Clayton-style logo mark */}
+            <div className="w-12 h-12 bg-[var(--brand-blue)] flex items-center justify-center">
+              <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
               </svg>
             </div>
-            <span className="font-bold text-xl text-gray-900">Reliable Homes of Sealy</span>
-          </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-lg text-[var(--foreground)] leading-tight tracking-tight">RELIABLE HOMES</span>
+              <span className="text-xs text-[var(--text-body)] uppercase tracking-wider">of Sealy, Texas</span>
+            </div>
+          </a>
           <a
             href="tel:9798856767"
-            className="text-sm text-gray-600 hover:text-[var(--brand-blue)] transition-colors flex items-center gap-1"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--brand-blue)] text-white text-sm font-semibold uppercase tracking-wide hover:bg-[var(--brand-blue-hover)] transition-all duration-300"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
             <span className="hidden sm:inline">(979) 885-6767</span>
+            <span className="sm:hidden">Call</span>
           </a>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-8 md:py-12">
+      <main className="flex-grow px-4 py-10 md:py-16 bg-gradient-to-b from-white to-[var(--brand-blue-light)]">
         <Funnel />
       </main>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-gray-100 mt-auto">
-        <div className="max-w-xl mx-auto text-center">
-          <p className="text-sm text-gray-500">
-            Reliable Homes of Sealy - Your Trusted Mobile Home Dealer in Texas
-          </p>
-          <p className="text-xs text-gray-400 mt-1">
-            390 Gebhardt Rd, Sealy, TX 77474
-          </p>
-          <div className="flex justify-center gap-4 mt-4 text-xs text-gray-400">
-            <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Terms of Service</a>
-            <span>|</span>
-            <a href="tel:9798856767" className="hover:text-[var(--brand-blue)] transition-colors">Contact Us</a>
+      {/* Footer - Clayton-style dark footer */}
+      <footer className="py-10 px-4 bg-[var(--footer-dark)]">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <h3 className="text-white font-bold text-lg mb-1">Reliable Homes of Sealy</h3>
+              <p className="text-gray-400 text-sm">Your Trusted Mobile Home Dealer in Texas</p>
+              <p className="text-gray-500 text-xs mt-2">
+                390 Gebhardt Rd, Sealy, TX 77474
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
+              <a
+                href="tel:9798856767"
+                className="inline-flex items-center gap-2 px-5 py-2 border border-[var(--brand-blue)] text-[var(--brand-blue)] text-sm font-semibold uppercase tracking-wide hover:bg-[var(--brand-blue)] hover:text-white transition-all duration-300"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                (979) 885-6767
+              </a>
+              <a
+                href="https://www.reliablehomesofsealy.com"
+                className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--brand-blue)] text-white text-sm font-semibold uppercase tracking-wide hover:bg-[var(--brand-blue-hover)] transition-all duration-300"
+              >
+                Visit Our Website
+              </a>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <p className="text-gray-500 text-xs">
+              © {new Date().getFullYear()} Reliable Homes of Sealy. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-xs text-gray-500">
+              <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Terms of Service</a>
+            </div>
           </div>
         </div>
       </footer>
