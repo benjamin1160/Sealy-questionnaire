@@ -1,4 +1,5 @@
 import Funnel from './components/Funnel';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -70,8 +71,8 @@ export default function Home() {
               © {new Date().getFullYear()} Reliable Homes of Sealy. All rights reserved.
             </p>
             <div className="flex gap-6 text-xs text-gray-500">
-              <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-[var(--brand-blue)] transition-colors">Terms of Service</a>
+              <Link href="/privacy-policy" className="hover:text-[var(--brand-blue)] transition-colors">Privacy Policy</Link>
+              <Link href="/terms-of-service" className="hover:text-[var(--brand-blue)] transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
