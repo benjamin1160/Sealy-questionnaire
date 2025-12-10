@@ -87,7 +87,7 @@ async function abandonSession(sessionId: string): Promise<void> {
   }
 }
 
-// Progress indicator component
+// Progress indicator component - Clayton style
 function ProgressIndicator({
   progress
 }: {
@@ -95,12 +95,12 @@ function ProgressIndicator({
 }) {
   return (
     <div className="w-full mb-8">
-      <div className="flex justify-end text-sm text-gray-500 mb-2">
-        <span>{Math.round(progress)}% complete</span>
+      <div className="flex justify-end text-sm text-[var(--text-body)] mb-2">
+        <span className="uppercase tracking-wide font-medium">{Math.round(progress)}% complete</span>
       </div>
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="h-1 bg-gray-200 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-green)] transition-all duration-500 ease-out"
+          className="h-full bg-[var(--brand-blue)] transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -108,7 +108,7 @@ function ProgressIndicator({
   );
 }
 
-// Answer button component
+// Answer button component - Clayton style
 function AnswerButton({
   answer,
   onClick,
@@ -122,12 +122,12 @@ function AnswerButton({
     <button
       onClick={onClick}
       className={`
-        w-full p-4 rounded-xl border-2 text-left transition-all duration-200
-        hover:border-[var(--brand-blue)] hover:bg-[var(--brand-blue-light)] hover:shadow-md hover:scale-[1.02]
-        active:scale-[0.98]
+        w-full p-4 border text-left transition-all duration-300
+        hover:border-[var(--brand-blue)] hover:bg-[var(--brand-blue-light)] hover:shadow-md
+        active:scale-[0.99]
         ${isSelected
           ? 'border-[var(--brand-blue)] bg-[var(--brand-blue-light)] shadow-md'
-          : 'border-gray-200 bg-white'
+          : 'border-gray-300 bg-white'
         }
       `}
     >
@@ -136,14 +136,14 @@ function AnswerButton({
           <span className="text-2xl flex-shrink-0 mt-0.5">{answer.icon}</span>
         )}
         <div className="flex-grow">
-          <p className="font-semibold text-gray-900 text-lg">{answer.text}</p>
+          <p className="font-semibold text-[var(--foreground)] text-lg">{answer.text}</p>
           {answer.subtext && (
-            <p className="text-gray-500 text-sm mt-1">{answer.subtext}</p>
+            <p className="text-[var(--text-body)] text-sm mt-1">{answer.subtext}</p>
           )}
         </div>
         <div className={`
-          w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center
-          transition-all duration-200
+          w-6 h-6 border flex-shrink-0 flex items-center justify-center
+          transition-all duration-300
           ${isSelected
             ? 'border-[var(--brand-blue)] bg-[var(--brand-blue)]'
             : 'border-gray-300'
@@ -219,11 +219,11 @@ function LeadCaptureForm({
 
   return (
     <div className="animate-fadeIn">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+      <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-3">
         {personalizedHeadline}
       </h2>
       {question.subheadline && (
-        <p className="text-gray-600 text-lg mb-8">{question.subheadline}</p>
+        <p className="text-[var(--text-body)] text-lg mb-8">{question.subheadline}</p>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -237,10 +237,10 @@ function LeadCaptureForm({
               value={formData.firstName}
               onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               className={`
-                w-full px-4 py-3 rounded-xl border-2 text-lg
+                w-full px-4 py-3 border text-lg
                 focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
-                transition-all duration-200
-                ${errors.firstName ? 'border-red-400' : 'border-gray-200'}
+                transition-all duration-300
+                ${errors.firstName ? 'border-red-400' : 'border-gray-300'}
               `}
               placeholder="Enter your first name"
               autoFocus
@@ -261,10 +261,10 @@ function LeadCaptureForm({
               value={formData.lastName}
               onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
               className={`
-                w-full px-4 py-3 rounded-xl border-2 text-lg
+                w-full px-4 py-3 border text-lg
                 focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
-                transition-all duration-200
-                ${errors.lastName ? 'border-red-400' : 'border-gray-200'}
+                transition-all duration-300
+                ${errors.lastName ? 'border-red-400' : 'border-gray-300'}
               `}
               placeholder="Enter your last name"
             />
@@ -284,10 +284,10 @@ function LeadCaptureForm({
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className={`
-                w-full px-4 py-3 rounded-xl border-2 text-lg
+                w-full px-4 py-3 border text-lg
                 focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
-                transition-all duration-200
-                ${errors.email ? 'border-red-400' : 'border-gray-200'}
+                transition-all duration-300
+                ${errors.email ? 'border-red-400' : 'border-gray-300'}
               `}
               placeholder="your@email.com"
             />
@@ -307,10 +307,10 @@ function LeadCaptureForm({
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className={`
-                w-full px-4 py-3 rounded-xl border-2 text-lg
+                w-full px-4 py-3 border text-lg
                 focus:outline-none focus:ring-2 focus:ring-[var(--brand-blue)] focus:border-[var(--brand-blue)]
-                transition-all duration-200
-                ${errors.phone ? 'border-red-400' : 'border-gray-200'}
+                transition-all duration-300
+                ${errors.phone ? 'border-red-400' : 'border-gray-300'}
               `}
               placeholder="(555) 123-4567"
             />
@@ -324,17 +324,17 @@ function LeadCaptureForm({
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-medium
-              hover:bg-gray-50 transition-all duration-200"
+            className="px-6 py-3 border border-gray-300 text-[var(--text-body)] font-semibold uppercase tracking-wide
+              hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
           >
             Back
           </button>
           <button
             type="submit"
-            className="flex-grow px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-blue-dark)]
-              text-white font-semibold text-lg shadow-lg shadow-blue-200
-              hover:shadow-xl hover:shadow-blue-300 hover:scale-[1.02]
-              active:scale-[0.98] transition-all duration-200"
+            className="flex-grow px-6 py-3 bg-[var(--brand-blue)] border border-[var(--brand-blue)]
+              text-white font-semibold text-base uppercase tracking-wide
+              hover:bg-[var(--brand-blue-hover)] hover:border-[var(--brand-blue-hover)]
+              active:scale-[0.99] transition-all duration-300"
           >
             Continue
           </button>
@@ -348,7 +348,7 @@ function LeadCaptureForm({
   );
 }
 
-// Transition screen component
+// Transition screen component - Clayton style
 function TransitionScreen({
   question,
   leadData,
@@ -364,17 +364,17 @@ function TransitionScreen({
 
   return (
     <div className="animate-fadeIn text-center">
-      <div className="w-16 h-16 bg-[var(--brand-blue-light)] rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="w-16 h-16 bg-[var(--brand-blue-light)] flex items-center justify-center mx-auto mb-6">
         <svg className="w-8 h-8 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
 
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-4">
         {personalizedHeadline}
       </h2>
       {question.subheadline && (
-        <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto leading-relaxed">
+        <p className="text-[var(--text-body)] text-lg mb-8 max-w-md mx-auto leading-relaxed">
           {question.subheadline}
         </p>
       )}
@@ -382,17 +382,17 @@ function TransitionScreen({
       <div className="flex gap-3 justify-center">
         <button
           onClick={onBack}
-          className="px-6 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-medium
-            hover:bg-gray-50 transition-all duration-200"
+          className="px-6 py-3 border border-gray-300 text-[var(--text-body)] font-semibold uppercase tracking-wide
+            hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
         >
           Back
         </button>
         <button
           onClick={onContinue}
-          className="px-8 py-3 rounded-xl bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-blue-dark)]
-            text-white font-semibold text-lg shadow-lg shadow-blue-200
-            hover:shadow-xl hover:shadow-blue-300 hover:scale-[1.02]
-            active:scale-[0.98] transition-all duration-200"
+          className="px-8 py-3 bg-[var(--brand-blue)] border border-[var(--brand-blue)]
+            text-white font-semibold uppercase tracking-wide
+            hover:bg-[var(--brand-blue-hover)] hover:border-[var(--brand-blue-hover)]
+            active:scale-[0.99] transition-all duration-300"
         >
           Got it, let&apos;s continue
         </button>
@@ -401,7 +401,7 @@ function TransitionScreen({
   );
 }
 
-// Result screen component
+// Result screen component - Clayton style
 function ResultScreen({
   question,
   leadData
@@ -422,47 +422,63 @@ function ResultScreen({
 
   return (
     <div className="animate-fadeIn text-center">
-      <div className="w-20 h-20 bg-gradient-to-r from-[var(--brand-blue)] to-[var(--brand-green)] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-slow">
+      <div className="w-20 h-20 bg-[var(--brand-blue)] flex items-center justify-center mx-auto mb-6">
         <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
         </svg>
       </div>
 
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <h2 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
         {personalizedHeadline}
       </h2>
       {question.subheadline && (
-        <p className="text-gray-600 text-lg mb-8 max-w-lg mx-auto leading-relaxed">
+        <p className="text-[var(--text-body)] text-lg mb-8 max-w-lg mx-auto leading-relaxed">
           {question.subheadline}
         </p>
       )}
 
-      <div className="bg-gradient-to-r from-[var(--brand-blue-light)] to-[var(--brand-green-light)] rounded-2xl p-6 max-w-md mx-auto mb-8">
-        <p className="text-sm text-[var(--brand-blue-dark)] font-medium mb-2">What happens next?</p>
-        <ul className="text-left text-gray-600 space-y-2">
-          <li className="flex items-start gap-2">
-            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
+      <div className="bg-[var(--brand-blue-light)] p-6 max-w-md mx-auto mb-8">
+        <p className="text-sm text-[var(--brand-blue-dark)] font-semibold uppercase tracking-wide mb-3">What happens next?</p>
+        <ul className="text-left text-[var(--text-body)] space-y-3">
+          <li className="flex items-start gap-3">
+            <span className="text-[var(--brand-blue)] font-bold">✓</span>
             <span>A Reliable Homes specialist will review your info</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
+          <li className="flex items-start gap-3">
+            <span className="text-[var(--brand-blue)] font-bold">✓</span>
             <span>We&apos;ll match you with homes that fit your needs</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[var(--brand-green-dark)] mt-1">✓</span>
+          <li className="flex items-start gap-3">
+            <span className="text-[var(--brand-blue)] font-bold">✓</span>
             <span>Expect to hear from us within 24 hours</span>
           </li>
         </ul>
       </div>
 
-      <div className="text-gray-500 text-sm">
-        <p>Questions? Call us at <a href="tel:9798856767" className="text-[var(--brand-blue)] font-medium hover:underline">(979) 885-6767</a></p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a
+          href="tel:9798856767"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--brand-blue)] text-[var(--brand-blue)]
+            font-semibold uppercase tracking-wide hover:bg-[var(--brand-blue)] hover:text-white transition-all duration-300"
+        >
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          (979) 885-6767
+        </a>
+        <a
+          href="https://www.reliablehomesofsealy.com"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--brand-blue)] border border-[var(--brand-blue)]
+            text-white font-semibold uppercase tracking-wide hover:bg-[var(--brand-blue-hover)] transition-all duration-300"
+        >
+          Browse Our Homes
+        </a>
       </div>
     </div>
   );
 }
 
-// Question screen component
+// Question screen component - Clayton style
 function QuestionScreen({
   question,
   leadData,
@@ -489,11 +505,11 @@ function QuestionScreen({
 
   return (
     <div className="animate-fadeIn">
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+      <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-3">
         {personalizedHeadline}
       </h2>
       {question.subheadline && (
-        <p className="text-gray-600 text-lg mb-8">{question.subheadline}</p>
+        <p className="text-[var(--text-body)] text-lg mb-8">{question.subheadline}</p>
       )}
 
       <div className="space-y-3 mb-8">
@@ -510,7 +526,7 @@ function QuestionScreen({
       {canGoBack && (
         <button
           onClick={onBack}
-          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 text-sm font-medium"
+          className="text-[var(--text-body)] hover:text-[var(--brand-blue)] transition-colors duration-300 text-sm font-semibold uppercase tracking-wide"
         >
           ← Go back
         </button>
